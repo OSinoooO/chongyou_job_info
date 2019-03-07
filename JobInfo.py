@@ -77,6 +77,7 @@ class JobInfoSpider(object):
             response = response.content.decode()
             self.lock.acquire()
             re_compile = re.findall(r'<div class="article-right floatR">(.*?)<div class="footer">', response, re.S)[0]
+			# 自动筛选功能，如需要查询全部信息需要关闭 if
             if re.findall(r'(?i){}'.format(self.key_word), re_compile, re.S):
                 item['name'] = re.findall(r'雇主名称：</label>(.*?)</td>', response, re.S)[0].strip()
                 item['time'] = re.findall(r'举办时间：</label>(.*?)</td>', response, re.S)[0].strip()
